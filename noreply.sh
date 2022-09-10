@@ -5,7 +5,7 @@ userTable=(/home/vmail/REDACTED/*/);
 userTable=("${userTable[@]%/}");
 userTable=("${userTable[@]##*/}");
 arrayLength=${#userTable[@]};
-
+export EPOCHSECONDS;
 for (( i=0; i<${arrayLength}; i++ ));
 do
   echo "${userTable[$i]}"
@@ -34,7 +34,7 @@ if [ ${emailAll} == "n" ]; then
   echo -e "Mime-Version: 1.0">> message;
   echo -e "Content-Type: text/html" >> message;
   echo -e "${body}" >> message;
-  sendmail -f noreply@REDACTED $recipient < message;
+  envsubst < message | sendmail -f noreply@stepbro.wtf $recipient;
 fi
 
 if [ ${emailAll} == "y" ]; then
@@ -47,7 +47,7 @@ if [ ${emailAll} == "y" ]; then
       echo -e "Mime-Version: 1.0">> message;
       echo -e "Content-Type: text/html" >> message;
       echo -e "${body}" >> message;
-      sendmail -f noreply@REDACTED "${userTable[$i]}@REDACTED" < message;
+      envsubst < message | sendmail -f noreply@stepbro.wtf $recipient;
       echo "Sent message to ${userTable[$i]}@REDACTED";
       sleep 0.25;
       rm /tmp/message;
