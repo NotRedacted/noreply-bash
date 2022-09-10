@@ -1,6 +1,6 @@
 #!/bin/bash
-rm -rf ~/body;
-rm -rf ~/message;
+rm -rf /tmp/body;
+rm -rf /tmp/message;
 userTable=(/home/vmail/REDACTED/*/);
 userTable=("${userTable[@]%/}");
 userTable=("${userTable[@]##*/}");
@@ -17,12 +17,12 @@ echo "Email all? (Y/N)"
 read emailAll;
 echo "Subject:";
 read subject;
-rm -rf ~/message;
+rm -rf /tmp/message;
 echo "Type the body and save the file, You can use HTML5 tags.";
 sleep 1;
-nano ~/body;
+nano /tmp/body;
 sleep 0.25;
-body=`cat ~/body`;
+body=`cat /tmp/body`;
 
 if [ ${emailAll} == "n" ]; then
   #We're emailing one user.
@@ -50,8 +50,8 @@ if [ ${emailAll} == "y" ]; then
       sendmail -f noreply@REDACTED "${userTable[$i]}@REDACTED" < message;
       echo "Sent message to ${userTable[$i]}@REDACTED";
       sleep 0.25;
-      rm -rf ~/message;
+      rm -rf /tmp/message;
     done
 fi
-rm -rf ~/message;
-rm -rf ~/body;
+rm -rf /tmp/message;
+rm -rf /tmp/body;
