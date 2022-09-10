@@ -28,7 +28,7 @@ if [ ${emailAll} == "n" ]; then
   #We're emailing one user.
   echo "Recipient Address:";
   read recipient;
-  echo -e "From: noreply@REDACTED";
+  echo -e "From: noreply@REDACTED" >> message;
   echo -e "To: ${recipient}" >> message;
   echo -e "Subject: ${subject}" >> message;
   echo -e "Mime-Version: 1.0">> message;
